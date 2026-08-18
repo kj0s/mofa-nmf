@@ -35,3 +35,22 @@ table(table(obj$cons_bc))
 # Sanity check: does cons_bc (minus the _P/_1 patient suffix) match the "barcode"
 # column format in ST223.rna.singlets.rds?
 head(sort(table(obj$cons_bc), decreasing = TRUE), 10)
+
+library(Seurat)
+obj <- readRDS("/vast/projects/Sisseq/human-haematopoiesis-sis-seq/data/ST223.annotated_fate.rds")
+
+# Is cons_bc unique per cell, or repeated (i.e. multiple cells sharing a clone)?
+length(unique(obj$cons_bc))
+ncol(obj)
+
+# If unique < ncol, we have single-cell data nested under clones — exactly what we want.
+# Distribution of clone sizes (cells per cons_bc):
+table(table(obj$cons_bc))
+
+# Sanity check: does cons_bc (minus the _P/_1 patient suffix) match the "barcode"
+# column format in ST223.rna.singlets.rds?
+head(sort(table(obj$cons_bc), decreasing = TRUE), 10)
+
+## new qs asked
+head(unique(obj$cons_bc), 10)
+nchar(unique(obj$cons_bc))
